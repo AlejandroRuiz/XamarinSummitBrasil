@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ShellDemo.ViewModels"
+             Title="Home"
+             x:Class="ShellDemo.Pages.HomePage">
+    <ContentPage.BindingContext>
+        <vm:HomeViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <CollectionView ItemsSource="{Binding Cards}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                     <Grid HeightRequest="300">
+                         <Image Aspect="AspectFill"
+                                Source="{Binding ImageUrl}" />
+                         <BoxView Color="Black"
+                                  Opacity=".2" />
+                        <StackLayout VerticalOptions="End"
+                                     Margin="20"
+                                     Spacing="0">
+                            <Label TextColor="White"
+                                   FontSize="Subtitle"
+                                   Text="{Binding Title}" />
+                            <BoxView Margin="0,20"
+                                     HorizontalOptions="Start"
+                                     HeightRequest="3"
+                                     WidthRequest="50"
+                                     Color="White" />
+                            <Label Margin="0,0,0,5"
+                                   FontSize="Subtitle"
+                                   TextColor="White"
+                                   Text="{Binding Subtitle}" />
+                            <Label FontSize="Caption"
+                                   TextColor="White"
+                                   Text="{Binding Description}" />
+                        </StackLayout>
+                         <ImageButton Margin="20"
+                                      BackgroundColor="Transparent"
+                                      Aspect="AspectFit"
+                                      Source="play_circle_filled_white"
+                                      VerticalOptions="End"
+                                      HorizontalOptions="End"
+                                      HeightRequest="35"
+                                      WidthRequest="35" />
+                     </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

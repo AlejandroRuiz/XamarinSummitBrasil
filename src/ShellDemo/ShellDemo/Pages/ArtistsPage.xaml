@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ShellDemo.ViewModels"
+             xmlns:services="clr-namespace:ShellDemo.Service"
+             Title="Artists"
+             x:Class="ShellDemo.Pages.ArtistsPage">
+    <ContentPage.BindingContext>
+        <vm:ArtistsViewModel />
+    </ContentPage.BindingContext>
+    <Shell.SearchHandler>
+        <services:ArtistsSearchHandler Placeholder="Search artists"
+                                       ShowsResults="true"
+                                       SearchBoxVisibility="Collapsible"
+                                       PlaceholderColor="{x:OnPlatform White, Android=Black}"
+                                       CancelButtonColor="{x:OnPlatform White, Android=Black}"
+                                       TextColor="{x:OnPlatform White, Android=Black}"
+                                       DisplayMemberName="Name">
+            <services:ArtistsSearchHandler.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Frame Grid.Column="0"
+                               CornerRadius="20"
+                               HeightRequest="40"
+                               WidthRequest="40"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               Padding="0"
+                               IsClippedToBounds="True">
+                            <Image Source="{Binding ImageUrl}"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Frame>
+                        <Label Grid.Column="1"
+                               VerticalTextAlignment="Center"
+                               FontSize="Subtitle"
+                               TextColor="#689F39"
+                               Text="{Binding Name}" />
+                    </Grid>
+                </DataTemplate>
+            </services:ArtistsSearchHandler.ItemTemplate>
+        </services:ArtistsSearchHandler>
+    </Shell.SearchHandler>
+    <ContentPage.Content>
+        <CollectionView x:Name="collectionView"
+                        ItemsSource="{Binding Artists}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout VerticalItemSpacing="5"
+                                 HorizontalItemSpacing="5"
+                                 Orientation="Vertical"
+                                 Span="2" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="0"
+                           HasShadow="False"
+                           BorderColor="Silver">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.ArtistTappedCommand, Source={x:Reference collectionView}}"
+                                                  CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                        <Grid BackgroundColor="White"
+                              VerticalOptions="Start"
+                              HeightRequest="230"
+                              Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70*" />
+                                <RowDefinition Height="20*" />
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Aspect="AspectFill"
+                                   Source="{Binding ImageUrl}" />
+                            <BoxView Grid.Row="1"
+                                     Opacity=".8"
+                                     Color="Black" />
+                            <Label Grid.Row="1"
+                                   Margin="10,0"
+                                   TextColor="White"
+                                   FontSize="Subtitle"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding Name}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>
